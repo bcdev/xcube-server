@@ -1,0 +1,16 @@
+version: "3.0"
+
+services:
+  xcube-server:
+    build: .
+    image: xcube-server:0.1.0
+    ports:
+      - "8083:8083"
+    volumes:
+        - /EOdata:/EOdata
+    command: >
+      "source activate xcube-server-dev && xcube-server -v -n 'cyanoalert-dev' -p 8083 -a '0.0.0.0' -u 30 -c 'server-config.yml'"
+    healthcheck:
+      test: ["CMD", "curl", "localhost:8081/"]
+      interval: 30s
+
